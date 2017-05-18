@@ -6,6 +6,8 @@ Lifecycle, LiveData, MVVM, ViewModels, DataBinding, Dagger
 
 https://developer.android.com/topic/libraries/architecture/guide.html
 
+![Alt sample](https://raw.githubusercontent.com/florent37/NewAndroidArchitecture-Github/master/media/screen_small.png)
+
 # LiveData as Observables !
 
 LiveDatas works like RxJava's Observables,
