@@ -2,6 +2,8 @@
 
 Sample project based on the new Android Component Architecture 
 
+Lifecycle, LiveData, MVVM, ViewModels, DataBinding, Dagger
+
 https://developer.android.com/topic/libraries/architecture/guide.html
 
 # LiveData as Observables !
