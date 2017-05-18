@@ -14,11 +14,14 @@
         android:orientation="vertical">
 
         <TextView
+            android:background="@color/colorPrimary"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="60dp"
             android:gravity="center"
             android:text="@{user.name}"
-            android:textColor="#3E3E3E"
+            android:textSize="18sp"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"
             tools:text="name" />
 
         <android.support.v7.widget.RecyclerView
