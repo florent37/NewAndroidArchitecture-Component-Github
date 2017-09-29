@@ -1,5 +1,9 @@
 # NewAndroidArchitecture-Github
 
+<a href="https://play.google.com/store/apps/details?id=com.github.florent37.florent.champigny">
+  <img alt="Android app on Google Play" src="https://developer.android.com/images/brand/en_app_rgb_wo_45.png" />
+</a>
+
 Sample project based on the new Android Component Architecture 
 
 Lifecycle, LiveData, MVVM, ViewModels, DataBinding, Dagger, Retrofit
@@ -94,3 +98,7 @@ public class UserViewModel extends ViewModel {
     }
 }
 ```
+
+<a href="https://play.google.com/store/apps/details?id=com.github.florent37.florent.champigny">
+  <img alt="Android app on Google Play" src="https://developer.android.com/images/brand/en_app_rgb_wo_45.png" />
+</a>
