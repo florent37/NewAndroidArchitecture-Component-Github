@@ -1,29 +1,33 @@
 package florent37.github.com.githubnewandroidarchitecture.viewmodel;
 
+import android.app.Application;
+import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.ViewModel;
+import android.support.annotation.NonNull;
 
 import java.util.List;
 
 import javax.inject.Inject;
 
+import florent37.github.com.githubnewandroidarchitecture.MainApplication;
 import florent37.github.com.githubnewandroidarchitecture.model.Repo;
-import florent37.github.com.githubnewandroidarchitecture.repository.GithubRepository;
+import florent37.github.com.githubnewandroidarchitecture.repository.RepoRepository;
 
 /**
  * Created by florentchampigny on 18/05/2017.
  */
 
-public class ReposListViewModel extends ViewModel {
-
-    private final GithubRepository githubRepository;
+public class ReposListViewModel extends AndroidViewModel {
 
     @Inject
-    public ReposListViewModel(GithubRepository githubRepository) {
-        this.githubRepository = githubRepository;
+    RepoRepository repoRepository;
+
+    public ReposListViewModel(@NonNull Application application) {
+        super(application);
+        ((MainApplication) application).getAppComponent().inject(this);
     }
 
     public LiveData<List<Repo>> getRepos(String userName) {
-        return githubRepository.getRepos(userName);
+        return repoRepository.getRepos(userName);
     }
 }

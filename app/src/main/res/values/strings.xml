@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">GithubNewAndroidArchitecture</string>
+    <string name="local">Local</string>
+    <string name="network">network</string>
 </resources>

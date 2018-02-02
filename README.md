@@ -44,10 +44,10 @@ public LiveData<User> getUser(String userName){
 
 # LifeCycle Owner
 
-Use LifecycleFragment and LifecycleActivity to be attached to the application's state
+Use Support Fragment and AppCompatActivity to be attached to the application's state
 
 ```java
-public class MainFragment extends LifecycleFragment {
+public class MainFragment extends Fragment {
 ```
 
 # DataBinding and ViewHolders

@@ -24,4 +24,10 @@ public abstract class AppComponent {
     }
 
     public abstract void inject(MainFragment mainFragment);
+
+    public abstract void inject(ReposListViewModel reposListViewModel);
+
+    public abstract void inject(UserViewModel userViewModel);
+
+    public abstract void inject(MainApplication mainApplication);
 }

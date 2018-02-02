@@ -1,6 +1,5 @@
 package florent37.github.com.githubnewandroidarchitecture;
 
-import android.arch.lifecycle.LifecycleFragment;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.databinding.DataBindingUtil;
@@ -14,29 +13,23 @@ import android.view.ViewGroup;
 
 import java.util.List;
 
-import javax.inject.Inject;
-
-import florent37.github.com.githubnewandroidarchitecture.dagger.AppComponent;
 import florent37.github.com.githubnewandroidarchitecture.databinding.FragmentMainBinding;
 import florent37.github.com.githubnewandroidarchitecture.model.Repo;
-import florent37.github.com.githubnewandroidarchitecture.model.User;
+import florent37.github.com.githubnewandroidarchitecture.model.UserSearchResult;
 import florent37.github.com.githubnewandroidarchitecture.viewmodel.ReposListViewModel;
 import florent37.github.com.githubnewandroidarchitecture.viewmodel.UserViewModel;
 
-public class MainFragment extends LifecycleFragment {
+public class MainFragment extends Fragment {
 
-    public static Fragment newInstance() {
-        return new MainFragment();
-    }
+    UserViewModel userViewModel;
+    ReposListViewModel reposListViewModel;
 
     private FragmentMainBinding viewDataBinding;
     private ReposAdapter reposAdapter;
 
-    @Inject
-    UserViewModel userViewModel;
-
-    @Inject
-    ReposListViewModel reposListViewModel;
+    public static Fragment newInstance() {
+        return new MainFragment();
+    }
 
     @Nullable
     @Override
@@ -50,24 +43,26 @@ public class MainFragment extends LifecycleFragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        userViewModel = ViewModelProviders.of(this).get(UserViewModel.class);
+        reposListViewModel = ViewModelProviders.of(this).get(ReposListViewModel.class);
+
         reposAdapter = new ReposAdapter();
         viewDataBinding.recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         viewDataBinding.recyclerView.setAdapter(reposAdapter);
 
-        AppComponent.from(getContext()).inject(this);
-        //inject the viewmodel responding to User
-        //inject the viewmodel responding to List<Repo>
+        //Will change the UI when userLiveData will have
+        userViewModel.getUserLiveData().observe(this, new Observer<UserSearchResult>() {
+            @Override
+            public void onChanged(@Nullable UserSearchResult userSearchResult) {
+                if (userSearchResult.success()) {
+                    viewDataBinding.setUser(userSearchResult.getUser());
+                } else {
 
-        //fetch the user from the datasource
-        userViewModel.getUser("florent37")
-                .observe(this, new Observer<User>() {
-                    @Override
-                    public void onChanged(@Nullable User user) {
-                        viewDataBinding.setUser(user);
-                    }
-                });
+                }
+            }
+        });
 
-        //fetch the repos from the datasource
+        //fetch the repos from the datasource, and update whe UI
         reposListViewModel.getRepos("florent37")
                 .observe(this, new Observer<List<Repo>>() {
                     @Override
@@ -76,5 +71,20 @@ public class MainFragment extends LifecycleFragment {
                         reposAdapter.setRepos(repos);
                     }
                 });
+
+        viewDataBinding.local.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //fetch the user from the datasource
+                userViewModel.searchLocally("florent37");
+            }
+        });
+        viewDataBinding.network.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //fetch the user from the datasource
+                userViewModel.searchOnline("florent37");
+            }
+        });
     }
 }

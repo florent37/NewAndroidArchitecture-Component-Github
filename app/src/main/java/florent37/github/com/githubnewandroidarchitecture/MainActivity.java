@@ -2,8 +2,9 @@ package florent37.github.com.githubnewandroidarchitecture;
 
 import android.arch.lifecycle.LifecycleActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 
-public class MainActivity extends LifecycleActivity {
+public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

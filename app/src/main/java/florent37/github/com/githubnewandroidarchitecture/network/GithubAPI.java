@@ -1,9 +1,10 @@
-package florent37.github.com.githubnewandroidarchitecture;
+package florent37.github.com.githubnewandroidarchitecture.network;
 
 import java.util.List;
 
 import florent37.github.com.githubnewandroidarchitecture.model.Repo;
 import florent37.github.com.githubnewandroidarchitecture.model.User;
+import florent37.github.com.githubnewandroidarchitecture.model.UserNetwork;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
@@ -19,6 +20,6 @@ public interface GithubAPI {
     Call<List<Repo>> listRepos(@Path("user") String user);
 
     @GET("/users/{user}")
-    Call<User> user(@Path("user") String user);
+    Call<UserNetwork> user(@Path("user") String user);
 
 }

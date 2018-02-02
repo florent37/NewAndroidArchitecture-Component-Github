@@ -1,12 +1,11 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.3"
+    compileSdkVersion 27
     defaultConfig {
-        applicationId "florent37.github.com.githubnewandroidarchitecture"
+        applicationId "florent37.github.com.architecturecomponants"
         minSdkVersion 15
-        targetSdkVersion 25
+        targetSdkVersion 27
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -27,14 +26,16 @@ android {
 }
 
 ext {
-    buildToolsVersion = "25.0.2"
-    supportLibVersion = "25.3.1"
-    archLifecycleVersion = "1.0.0-alpha1"
+    supportLibVersion = "27.0.2"
+    archLifecycleVersion = "1.0.0"
 }
 
 dependencies {
+    compile 'com.facebook.stetho:stetho:1.5.0'
+
     compile 'com.android.support:appcompat-v7:' + project.supportLibVersion
-    compile 'com.android.support.constraint:constraint-layout:1.0.0'
+    compile 'com.android.support:support-v4:' + project.supportLibVersion
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
 
     compile 'com.google.dagger:dagger:2.10'
     annotationProcessor 'com.google.dagger:dagger-compiler:2.10'
@@ -49,7 +50,7 @@ dependencies {
     compile 'android.arch.lifecycle:extensions:' + project.archLifecycleVersion;
     annotationProcessor "android.arch.lifecycle:compiler:" + project.archLifecycleVersion;
 
-    //compile 'android.arch.persistence.room:runtime:' + rootProject.archRoomVersion;
-    //annotationProcessor "android.arch.persistence.room:compiler:" + rootProject.archRoomVersion;
+    implementation "android.arch.persistence.room:runtime:" + project.archLifecycleVersion;
+    annotationProcessor "android.arch.persistence.room:compiler:" + project.archLifecycleVersion;
 
 }
