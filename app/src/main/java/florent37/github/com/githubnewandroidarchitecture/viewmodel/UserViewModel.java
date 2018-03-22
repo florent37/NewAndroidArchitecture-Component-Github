@@ -3,6 +3,7 @@ package florent37.github.com.githubnewandroidarchitecture.viewmodel;
 import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.MediatorLiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.Observer;
 import android.support.annotation.NonNull;
@@ -37,35 +38,37 @@ public class UserViewModel extends AndroidViewModel {
         ((MainApplication) application).getAppComponent().inject(this);
     }
 
-    private final MutableLiveData<UserSearchResult> userLiveData = new MutableLiveData<>();
+    private final MediatorLiveData<UserSearchResult> userLiveData = new MediatorLiveData<>();
 
     public LiveData<UserSearchResult> getUserLiveData() {
         return userLiveData;
     }
 
-    public void searchOnline(String userName) {
-        //userLiveData will be notified when the user is fetched
-        final LiveData<User> userLiveDataNetwork = userRepositoryNetwork.searchUser(userName);
-        userLiveDataNetwork.observeForever(new Observer<User>() {
-            @Override
-            public void onChanged(@Nullable User user) {
-                UserViewModel.this.userLiveData.postValue(new UserSearchResult(user));
-                userLiveDataNetwork.removeObserver(this);
-            }
-        });
+    public void searchOnline(@Nullable final String userName) {
+        if (userName != null) {
+            //userLiveData will be notified when the user is fetched
+            final LiveData<User> userLiveDataNetwork = userRepositoryNetwork.searchUser(userName);
+            userLiveData.addSource(userLiveDataNetwork, new Observer<User>() {
+                @Override
+                public void onChanged(@Nullable User user) {
+                    userLiveData.postValue(new UserSearchResult(user));
+                    userLiveData.removeSource(userLiveDataNetwork);
+                }
+            });
+        }
     }
 
-    public void searchLocally(String userName) {
-        //userLiveData will be notified when the user is fetched
-        final LiveData<User> userLiveDataLocal = userRepositoryLocal.searchUser(userName);
-        userLiveDataLocal.observeForever(new Observer<User>() {
-            @Override
-            public void onChanged(@Nullable User user) {
-                //success
-                UserViewModel.this.userLiveData.postValue(new UserSearchResult(user));
-                userLiveDataLocal.removeObserver(this);
-            }
-        });
-
+    public void searchLocally(@Nullable final String userName) {
+        if (userName != null) {
+            //userLiveData will be notified when the user is fetched
+            final LiveData<User> userLiveDataLocal = userRepositoryLocal.searchUser(userName);
+            userLiveData.addSource(userLiveDataLocal, new Observer<User>() {
+                @Override
+                public void onChanged(@Nullable User user) {
+                    userLiveData.postValue(new UserSearchResult(user));
+                    userLiveData.removeSource(userLiveDataLocal);
+                }
+            });
+        }
     }
 }

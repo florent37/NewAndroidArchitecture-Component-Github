@@ -63,14 +63,13 @@ public class MainFragment extends Fragment {
         });
 
         //fetch the repos from the datasource, and update whe UI
-        reposListViewModel.getRepos("florent37")
-                .observe(this, new Observer<List<Repo>>() {
-                    @Override
-                    public void onChanged(@Nullable List<Repo> repos) {
-                        //when available, send it to the recyclerview
-                        reposAdapter.setRepos(repos);
-                    }
-                });
+        reposListViewModel.getReposLiveData().observe(this, new Observer<List<Repo>>() {
+            @Override
+            public void onChanged(@Nullable List<Repo> repos) {
+                //when available, send it to the recyclerview
+                reposAdapter.setRepos(repos);
+            }
+        });
 
         viewDataBinding.local.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,5 +85,7 @@ public class MainFragment extends Fragment {
                 userViewModel.searchOnline("florent37");
             }
         });
+
+        reposListViewModel.searchRepos("florent37");
     }
 }
